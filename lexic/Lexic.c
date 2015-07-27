@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "funciones.c"
 #include "linked_list.c"
+#include "transitions.c"
+
 //Definition of a Macro, kinf of predefined function
 
 #define getIntArraySize(x) sizeof(x)/sizeof(int)
@@ -18,7 +20,23 @@ int main()
 	*	=	acceder a el valor de la variable
 	
 	*/
-	int* x;
+	
+	
+	char inputFile[]="transitions.txt";
+	int rows,cols;
+	getStatesCount(inputFile,&rows,&cols);
+	if(rows==ERROR_READING || cols==ERROR_READING)
+	{
+		printf("Error");
+		return 0;
+	}
+	printf("MaxEstados %d  %d\n",rows,cols);
+	
+	
+	
+	
+	
+	/*
 	Lista* lista=crearLista(agregarValorLista, imprimirLista, getValorLista);
 	lista->getAt=getValorLista;
 	lista->imprimir(lista);
@@ -28,13 +46,12 @@ int main()
 		printf("Valor no encontrado\n");
 	else
 		printf("Valor %d \n", xs);
-	//configurarLista(lista);
+	sampleTablaTransiciones();*/
 	
-	
-	sampleTablaTransiciones();
 	
 	return 0;
 }
+
 
 void sampleTablaTransiciones()
 {
