@@ -32,7 +32,7 @@ int main()
 	}
 	printf("MaxEstados %d  %d\n",rows,cols);
 	
-	
+	defineMatrix(inputFile, rows, cols);
 	
 	
 	

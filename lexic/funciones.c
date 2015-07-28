@@ -4,7 +4,6 @@
 #define TRUE 0
 #define FALSE -100
 #define NOT_FOUND -100
-#define ERROR_STATE -200
 #define INVALID_POSITION -1
 /*
 	La funcion recibe un apuntador a un entero
