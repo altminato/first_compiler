@@ -22,7 +22,7 @@ int main()
 	*/
 	
 	
-	char inputFile[]="transitions.txt";
+	char inputFile[]="traansitions.txt";
 	int rows,cols;
 	getStatesCount(inputFile,&rows,&cols);
 	if(rows==ERROR_READING || cols==ERROR_READING)

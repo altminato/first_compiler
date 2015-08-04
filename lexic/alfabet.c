@@ -1,6 +1,45 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+enum ReservedWords
+{
+	incluir,
+	principal,
+	finprincipal,
+	escribe,
+	captura,
+	si,
+	sino,
+	evalua,
+	caso,
+	ninguno,
+	finevalua,
+	desde,
+	hasta,
+	intervalo,
+	findesde,
+	mientras,
+	finmientras,
+	haz,
+	hazhasta,
+	limpia,
+	ubica,
+	identificador
+};
+
+void readAlphabet(char input[])
+{
+	FILE* file;
+	file=fopen(input,"r");
+	if(file==NULL){
+		printf("EXIT");
+		return;
+	}
+	
+		
+}
+
 int getCharColumn(char input)
 {
 	if(input=='a' || input=='A')
