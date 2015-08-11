@@ -7,52 +7,42 @@
 #define LINE 120
 #define ERROR_STATE -1
 
-void getStatesCount(char inputFile[], int* rows, int* cols )
+void getStatesCount(FILE* file, int* rows, int* cols )
 {
-	FILE* file;
 	*rows=ERROR_READING;
 	*cols=ERROR_READING;
-	file=fopen(inputFile, "r");
 	if(file != NULL)
 	{
 		int x=fscanf(file,"%d,%d",rows,cols);
 		if(x == 2)
 		{
-			fclose(file);
+			//Read line jump, so that the next function can start reading the next line.
+			char chara='.';
+			fscanf(file,"\n", &chara);
 			return;
 		}		
-		fclose(file);
 		return;
 	}
-	fclose(file);
 	return;
 }
 
-void fillMatrix(char input[], Lista* lista[], int rows, int cols)
+void fillMatrix(FILE* file, Lista* lista[], int rows, int cols)
 {
-	FILE* file=fopen(input,"r");
 	if(file != NULL)
 	{
-		char line[LINE];
 		int c=0;
 		int num=-1;
-		int startPos=2;
-		int counter=0;
 		int rowc=0;
 		int colc=0;
 		
 		while((c=fscanf(file,"%d,",&num))==1)
 		{
-			if(counter>=2)
-			{
-				lista[rowc]->add(lista[rowc], num);
-				if(colc+1 >= cols){
-					rowc++;
-					colc=0;
-				}else
-					colc++;
-			}
-			counter++;
+			lista[rowc]->add(lista[rowc], num);
+			if(colc+1 >= cols){
+				rowc++;
+				colc=0;
+			}else
+				colc++;
 		}
 		for(c=0;c<40;c++)
 			lista[8]->add(lista[8], -1);
@@ -66,16 +56,16 @@ void fillMatrix(char input[], Lista* lista[], int rows, int cols)
 	}
 }
 
-void defineMatrix(char inputFile[], int rows, int cols)
+void defineMatrix(FILE* file, int rows, int cols, char alfabet[], int alfabetSize)
 {
 	Lista* states[rows];
 	int i=0;
 	for(i=0; i<rows; i++)
 		states[i]=crearLista(agregarValorLista, imprimirLista, getValorLista);
-	fillMatrix(inputFile, states, rows, cols);
+	fillMatrix(file, states, rows, cols);
 	char input[]="incluir";
-	
-	int state=IsValidEntry(states, input, 0, 7, rows, 0);
+	strupr(input);
+	int state=IsValidEntry(states, input, 0, 7, rows, 0, alfabet, alfabetSize);
 	if(state==ERROR_STATE)
 		printf("ERROR_STATE\n");
 	else
@@ -83,14 +73,16 @@ void defineMatrix(char inputFile[], int rows, int cols)
 }
 
 
-int IsValidEntry(Lista* lista[], char input[], int posicion, int limite, int rows, int state)
+int IsValidEntry(Lista* lista[], char input[], int posicion, int limite, int rows, int state, char alfabet[], int alfabetSize)
 {
 	
-	int column=getCharColumn(input[posicion]);
+	int column=getAlfabetColumn(alfabet, input[posicion], alfabetSize);
+	//printf("Column %d for character %c \n", column, input[posicion]);
 	if(column==ERROR_STATE)
 	{
 		return ERROR_STATE;
 	}
+	
 	int targetState=lista[state]->getAt(lista[state], column);
 	if(targetState==ERROR_STATE)
 	{
@@ -101,7 +93,7 @@ int IsValidEntry(Lista* lista[], char input[], int posicion, int limite, int row
 	{
 		return state;
 	}
-	return IsValidEntry(lista,input, ++posicion, limite, rows, targetState);
+	return IsValidEntry(lista,input, ++posicion, limite, rows, targetState, alfabet, alfabetSize);
 }
 
 

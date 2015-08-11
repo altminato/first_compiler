@@ -7,12 +7,12 @@
 //Definition of a Macro, kinf of predefined function
 
 #define getIntArraySize(x) sizeof(x)/sizeof(int)
-#define getCharArraySize(x) (sizeof(x)/sizeof(char))-1
+#define getCharArraySize(x) (sizeof(x)/sizeof(char))
 
 void sampleTablaTransiciones();
 int main()
 {
-	printf("Parametros por referencia\n");
+	//printf("Parametros por referencia\n");
 	/*
 	Un puntero preserva la direccion de memoria de una variable:
 	
@@ -21,10 +21,42 @@ int main()
 	
 	*/
 	
+	char inputFile[]="transitions.txt";
+	FILE* file;
+	file=fopen(inputFile, "r");
+	if(file==NULL)
+	{
+		printf("Error: Invalid input file.\n");
+	}
 	
-	char inputFile[]="traansitions.txt";
 	int rows,cols;
-	getStatesCount(inputFile,&rows,&cols);
+	int alfabetCharacters=ERROR_READING;
+	printf("\nReading lenght of alfabet....\n");
+	readAlphabetLength(file, &alfabetCharacters);
+	if(alfabetCharacters==ERROR_READING)
+	{
+		printf("Error: reading the characters length\n");
+		return 0;
+	}
+	printf("Alfabet length %d \n",alfabetCharacters);
+	
+	char alfabet[alfabetCharacters];
+	readAlfabet(file, alfabet, alfabetCharacters);
+	
+	/*printf("Printing alfabet \n");
+	int i=0;
+	for(i=0; i<alfabetCharacters; i++){
+		printf("%c , ", alfabet[i]);
+		
+	}*/
+	
+	char entrada[]={"abc"};
+	strupr(entrada);
+	printf("CADENA: %s \n", entrada);
+	printf("\nReading transition matrix....\n");
+	
+	getStatesCount(file,&rows,&cols);
+	
 	if(rows==ERROR_READING || cols==ERROR_READING)
 	{
 		printf("Error");
@@ -32,7 +64,7 @@ int main()
 	}
 	printf("MaxEstados %d  %d\n",rows,cols);
 	
-	defineMatrix(inputFile, rows, cols);
+	defineMatrix(file, rows, cols, alfabet, alfabetCharacters);
 	
 	
 	

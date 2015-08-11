@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 enum ReservedWords
 {
 	incluir,
@@ -28,17 +27,56 @@ enum ReservedWords
 	identificador
 };
 
-void readAlphabet(char input[])
+void readAlphabetLength(FILE* file, int* rows)
 {
-	FILE* file;
-	file=fopen(input,"r");
+	*rows=-200;
 	if(file==NULL){
 		printf("EXIT");
 		return;
 	}
-	
-		
+	int intsRead=fscanf(file,"%d",rows);
+	if(intsRead==1)
+	{
+		//Read line jump, so that the next function can start reading the next line.
+		char chara='.';
+		fscanf(file,"\n", &chara);
+		return;
+	}
 }
+void readAlfabet(FILE* file, char alfabetArray[], int alfabetLength)
+{
+	if(file==NULL){
+		printf("Error reading alfabet.\n");
+		return;
+	}
+	int charCounter=0;
+	int x=0;
+	char character='.';
+	while(charCounter<alfabetLength)
+	{
+		int charsRead=fscanf(file,"%c,",&character);
+		if(charsRead==1)
+		{
+			alfabetArray[charCounter]=character;
+			charCounter++;
+		}else
+		{
+			printf("Error: Expected character not found. \n");
+		}
+	}
+}
+
+int getAlfabetColumn(char alfabet[], char input, int alfabetSize)
+{
+	int i;
+	for(i=0; i<alfabetSize; i++)
+	{
+		if(alfabet[i]==input)
+			return i;
+	}
+	return -1;
+}
+
 
 int getCharColumn(char input)
 {

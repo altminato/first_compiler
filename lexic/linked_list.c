@@ -97,7 +97,7 @@ int imprimir(Nodo* nodo)
 {
 	if(nodo != NULL)
 	{
-		printf("%d , ",nodo->valor);
+		printf("%d,",nodo->valor);
 		return imprimir(nodo->next);
 	}else{
 	return 0;
