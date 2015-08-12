@@ -49,10 +49,7 @@ int main()
 		printf("%c , ", alfabet[i]);
 		
 	}*/
-	
-	char entrada[]={"abc"};
-	strupr(entrada);
-	printf("CADENA: %s \n", entrada);
+
 	printf("\nReading transition matrix....\n");
 	
 	getStatesCount(file,&rows,&cols);
