@@ -44,9 +44,8 @@ void fillMatrix(FILE* file, Lista* lista[], int rows, int cols)
 			}else
 				colc++;
 		}
-		for(c=0;c<40;c++)
-			lista[17]->add(lista[17], -1);
-		
+		for(c=0;c<cols;c++)
+			lista[rowc]->add(lista[rowc], -1);
 		/*for(c=0; c<rows; c++)
 		{
 			lista[c]->imprimir(lista[c]);
@@ -63,9 +62,9 @@ void defineMatrix(FILE* file, int rows, int cols, char alfabet[], int alfabetSiz
 	for(i=0; i<rows; i++)
 		states[i]=crearLista(agregarValorLista, imprimirLista, getValorLista);
 	fillMatrix(file, states, rows, cols);
-	char input[]="   principal";
+	char input[]="   			incluir ";
 	strupr(input);
-	int state=IsValidEntry(states, input, 0, 12, rows, 0, alfabet, alfabetSize);
+	int state=IsValidEntry(states, input, 0, 14, rows, 0, alfabet, alfabetSize);
 	if(state==ERROR_STATE)
 		printf("ERROR_STATE\n");
 	else
