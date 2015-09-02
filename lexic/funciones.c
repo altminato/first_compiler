@@ -55,3 +55,16 @@ State* createState(int value, int isFinal, int isAcceptance)
 	state->isAcceptance=isAcceptance;
 	return state;
 }
+
+int getCharArraySize(char input[])
+{
+	int cont=0;
+	do
+	{
+		if(input[cont]=='\0'){
+			return cont;
+		}
+		cont++;
+	}while(1);
+	return cont;
+}

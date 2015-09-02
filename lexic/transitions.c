@@ -7,6 +7,8 @@
 #define LINE 120
 #define ERROR_STATE -1
 
+#define getCharSize(x) (sizeof(x)/sizeof(char))
+
 void getStatesCount(FILE* file, int* rows, int* cols )
 {
 	*rows=ERROR_READING;
@@ -62,9 +64,15 @@ void defineMatrix(FILE* file, int rows, int cols, char alfabet[], int alfabetSiz
 	for(i=0; i<rows; i++)
 		states[i]=crearLista(agregarValorLista, imprimirLista, getValorLista);
 	fillMatrix(file, states, rows, cols);
-	char input[]="   			incluir ";
+	
+	char input[200];
+	
+	printf("\nType the word to test:\n");
+	scanf("%[^\n]%*c",input);
+	int charLenhgt=getCharArraySize(input);
+	//printf("Entered word %s %d \n",input, charLenhgt);
 	strupr(input);
-	int state=IsValidEntry(states, input, 0, 14, rows, 0, alfabet, alfabetSize);
+	int state=IsValidEntry(states, input, 0, charLenhgt, rows, 0, alfabet, alfabetSize);
 	if(state==ERROR_STATE)
 		printf("ERROR_STATE\n");
 	else
@@ -76,12 +84,11 @@ int IsValidEntry(Lista* lista[], char input[], int posicion, int limite, int row
 {
 	
 	int column=getAlfabetColumn(alfabet, input[posicion], alfabetSize);
-	printf("Column %d for character '%c' \n", column, input[posicion]);
+	//printf("Column %d for character '%c' state %d \n", column, input[posicion], state);
 	if(column==ERROR_STATE)
 	{
 		return ERROR_STATE;
 	}
-	
 	int targetState=lista[state]->getAt(lista[state], column);
 	if(targetState==ERROR_STATE)
 	{
